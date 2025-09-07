@@ -23,7 +23,8 @@ $stmt= $db->query("select users.name, users.password, roles.name as role from us
 and users.role_id=roles.id" );
 $data=$stmt->fetch_assoc();
 
-print_r($data);
+// print_r($data);
+
     if(count($data)){
         $message=["login"=>"Welcome {$data['name']} " ];
         $_SESSION["name"]=$data['name'];

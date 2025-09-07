@@ -19,7 +19,7 @@ if(isset($_POST["btn_login"])){
 
 
 
-$stmt= $db->query("select users.name, users.password, roles.name as role from users, roles where users.name='$name' and users.password='$password'
+$stmt= $db->query("select users.name, users.password, roles.name as role from users, roles where users.name='$name' or users.email='$name' and users.password='$password'
 and users.role_id=roles.id" );
 $data=$stmt->fetch_assoc();
 

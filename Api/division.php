@@ -1,0 +1,71 @@
+<?php
+include_once "db_config.php";
+$stmt=$db->query("select * from divisions");
+$data=$stmt->fetch_all(MYSQLI_ASSOC);
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Division & Distric in Bangladesh</title>
+</head>
+
+<body>
+<h1>All Divisions</h1>
+   <select name="division" id="division">
+
+       <?php
+       foreach($data as $value){
+        echo "<option value='{$value['id']}'>{$value['name']}</option>";
+       }
+       ?>
+
+   </select>
+
+<h1>All Districts</h1>
+<select name="districts" id="districts">
+  <option value="">Choose Your Districs</option>
+</select>
+
+
+
+<script>
+let division=document.getElementById("division");
+let districts=document.getElementById("districts");
+
+division.addEventListener("change",function(e){
+let id= division.value;
+
+
+fetch("districts.php",{
+method: "POST",
+body: JSON.stringify({id:id})
+
+})
+
+.then(res=>res.json())
+.then(data=>{
+    let html="";
+    data.forEach(element=>{
+        html+=`<option value="${element.id}">${element.name}</option>`;
+    });
+    districts.innerHTML=html;
+
+})
+.catch(err=>console.log(err));
+
+});
+
+
+
+</script>
+
+
+
+
+</body>
+</html>
